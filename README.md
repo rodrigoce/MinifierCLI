@@ -21,4 +21,8 @@ The target path can be the same of source path.
 
 When InsertTimeStampInAppSettings is true, it will create an attribute in file appsettings.json with the timestamp of minify execution that can be used for the cache invalidation.
 
+# Instalation
+
+dotnet tool install --global MinifierCLI
+
 So, type MinifierCLI
