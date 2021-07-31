@@ -3,6 +3,7 @@
 CLI tool for minify js and css files.
 It requires the minify.json file.
 
+```
 {
     "JsRootSource": "js/notmin",
     "JsRootTarget": "js/min",
@@ -14,5 +15,6 @@ It requires the minify.json file.
 
     "InsertTimeStampInAppSettings": true
 }
+```
 
 The target path can be the same of source path.
