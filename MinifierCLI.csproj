@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>MinifierCLI</ToolCommandName>
+    <PackageOutputPath>./nupkg</PackageOutputPath>
+    
+    <PackageId>MinifierCLI</PackageId>
+    <PackageVersion>1.0.5</PackageVersion>
+    <Authors>Rodrigo Castro Eleotério</Authors>
+    <Description>CLI Tool for minify Js and Css. Minify is provided by Nuglify Package. Read and write json files with Newtonsoft.Json</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Nuglify" Version="1.13.12" />
+  </ItemGroup>
+
+</Project>

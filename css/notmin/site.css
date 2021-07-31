@@ -1,0 +1,56 @@
+/* cores */
+.ww-navbar { background-color: #0078d4; /*height: 50px;*/ color: white; }
+.ww-bg-cor1 { background-color: #e3f2fd; }
+.ww-bg-cor2 { background-color: #cff3da; }
+.table-tr-verde { background-color: #cff3da; }
+.table-tr-verde th { font-family: 'Arial Narrow', 'Franklin Gothic Medium', Arial, sans-serif; font-weight: normal; }
+/* fim cores */
+
+/* panel */
+.ww-panel { border: 1px solid #dee2e6; border-radius: 0.25rem; position: relative; }
+.ww-panel-header { border-bottom: 1px solid #dee2e6; }
+/* fim panel */
+
+.field-validation-error {
+    margin-top: 3px;
+    display: inline-block;
+    color: white;
+    background-color: orangered;
+    padding: 0.25em 0.4em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    vertical-align: baseline;
+    border-radius: 0.25rem;
+}
+
+.div-height-31 { height: 31px; line-height:31px; }
+
+.esmaecer { filter: alpha(opacity=30); opacity: 0.30; }
+.desmaecer { filter: alpha(opacity=100); opacity: 1; }
+
+.pager-grid3 { color: #212529; border-color: rgb(118, 118, 118); height: auto; width: 35px; }
+
+/* redefine a margin-bottom de 5px do bootstrap  */
+.label-ww { font-family: 'Arial Narrow', 'Franklin Gothic Medium', Arial, sans-serif; margin-bottom: 0px; }
+.label-ww2 { margin-bottom: 0px; }
+
+/* itens do menu principal */
+.item-menu-principal { background-color: rgb(248, 246, 246); cursor: pointer; }
+.item-menu-principal:hover { background-color: rgb(202, 198, 198); transition: 200ms; }
+/* fim itens do menu principal */
+
+/* oculta os spins de inputs type="number" */
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { display: none; }
+
+/* ajustes no drop-down */
+.dropdown-toggle-no-arrow::after { display: none; }
+
+/* larguas padrões */
+.bt-width-34 { width: 34px;}
+.bt-width-150 { width: 150px; border: olivedrab;}
+
+.bt-ww-1 { cursor: pointer; outline: none; transition: text-decoration 0.2s; }
+.bt-ww-1:hover { text-decoration: underline; }
+.bt-ww-1:active { text-decoration: underline; text-decoration-color: blue; }  

@@ -1,0 +1,11 @@
+{
+    "JsRootSource": "js/notmin",
+    "JsRootTarget": "js/notmin",
+    "JsInsertMinInfix" : true,
+    
+    "CssRootSource": "css/notmin",
+    "CssRootTarget": "css/notmin",
+    "CssInsertMinInfix" : true,
+
+    "InsertTimeStampInAppSettings": true
+}
