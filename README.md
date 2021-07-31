@@ -19,4 +19,6 @@ It requires the minify.json file.
 
 The target path can be the same of source path.
 
+When InsertTimeStampInAppSettings is true, it will create an attribute in file appsettings.json with the timestamp of minify execution that can be used for the cache invalidation.
+
 So, type MinifierCLI
