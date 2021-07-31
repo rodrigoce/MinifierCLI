@@ -11,6 +11,8 @@
     <PackageVersion>1.0.5</PackageVersion>
     <Authors>Rodrigo Castro Eleotério</Authors>
     <Description>CLI Tool for minify Js and Css. Minify is provided by Nuglify Package. Read and write json files with Newtonsoft.Json</Description>
+    <PackageProjectUrl>https://github.com/rodrigoce/MinifierCLI</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/rodrigoce/MinifierCLI</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
