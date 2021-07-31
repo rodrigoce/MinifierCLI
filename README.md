@@ -18,3 +18,5 @@ It requires the minify.json file.
 ```
 
 The target path can be the same of source path.
+
+So, type MinifierCLI
