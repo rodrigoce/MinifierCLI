@@ -8,7 +8,7 @@
     <PackageOutputPath>./nupkg</PackageOutputPath>
     
     <PackageId>MinifierCLI</PackageId>
-    <PackageVersion>1.0.5</PackageVersion>
+    <PackageVersion>1.0.6</PackageVersion>
     <Authors>Rodrigo Castro Eleotério</Authors>
     <Description>CLI Tool for minify Js and Css. Minify is provided by Nuglify Package. Read and write json files with Newtonsoft.Json</Description>
     <PackageProjectUrl>https://github.com/rodrigoce/MinifierCLI</PackageProjectUrl>

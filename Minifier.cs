@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using NUglify;
+using NUglify.JavaScript;
 
 namespace WebApp.MinifyCLI
 {
@@ -30,13 +31,16 @@ namespace WebApp.MinifyCLI
 
         private void _Minify(IReadOnlyCollection<string> listOfFiles, string rootSourcePath, string rootTargetPath)
         {
+            CodeSettings codeSettings = new CodeSettings();
+            codeSettings.PreserveFunctionNames = true;
+
             foreach (var fileName in listOfFiles)
             {
                 string sourceCode = File.ReadAllText(fileName);
 
                 UglifyResult result = new UglifyResult();
                 if (fileName.EndsWith(".js"))
-                    result = Uglify.Js(sourceCode);
+                    result = Uglify.Js(sourceCode, codeSettings);
                 else if (fileName.EndsWith(".css"))
                     result = Uglify.Css(sourceCode);
 
