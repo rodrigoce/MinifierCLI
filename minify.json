@@ -2,6 +2,7 @@
     "JsRootSource": "js/notmin",
     "JsRootTarget": "js/notmin",
     "JsInsertMinInfix" : true,
+    "JsUseBasicMinify" : true,
     
     "CssRootSource": "css/notmin",
     "CssRootTarget": "css/notmin",

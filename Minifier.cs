@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using MinifierCLI.Algorithm;
 using NUglify;
 using NUglify.JavaScript;
 
@@ -31,45 +32,75 @@ namespace WebApp.MinifyCLI
 
         private void _Minify(IReadOnlyCollection<string> listOfFiles, string rootSourcePath, string rootTargetPath)
         {
-            CodeSettings codeSettings = new CodeSettings();
-            codeSettings.PreserveFunctionNames = true;
+            // CodeSettings codeSettings = new CodeSettings();
+            // codeSettings.PreserveFunctionNames = true;
 
             foreach (var fileName in listOfFiles)
             {
-                string sourceCode = File.ReadAllText(fileName);
-
-                UglifyResult result = new UglifyResult();
-                if (fileName.EndsWith(".js"))
-                    result = Uglify.Js(sourceCode, codeSettings);
-                else if (fileName.EndsWith(".css"))
-                    result = Uglify.Css(sourceCode);
-
-                if (result.HasErrors == false)
+                if (fileName.EndsWith(".js", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    string newFilePath = GetNewFilePath(fileName, rootSourcePath, rootTargetPath);
-
-                    Directory.CreateDirectory(Path.GetDirectoryName(newFilePath));
-                    File.WriteAllText(newFilePath, result.Code);
-
-                    _consoleHelper.WriteSuccess(fileName.Replace(rootSourcePath, ""));
+                    if (_config.JsUseBasicMinify)
+                        _MinifyByBasicMinify(rootSourcePath, rootTargetPath, fileName);
+                    else
+                        _MinifyByNuglify(rootSourcePath, rootTargetPath, fileName);
                 }
-                else
+                if (fileName.EndsWith(".css", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    _consoleHelper.WriteError(result.Errors.ToString());
+                    if (_config.CssUseBasicMinify)
+                        _MinifyByBasicMinify(rootSourcePath, rootTargetPath, fileName);
+                    else
+                        _MinifyByNuglify(rootSourcePath, rootTargetPath, fileName);
                 }
 
             }
         }
 
+        private void _MinifyByBasicMinify(string rootSourcePath, string rootTargetPath, string fileName)
+        {
+            var basicMinifier = new BasicMinifier();
+            string newCode = basicMinifier.MinifyFile(fileName, true);
+            _WriteOnDisk(rootSourcePath, rootTargetPath, fileName, newCode);
+        }
+
+        private void _MinifyByNuglify(string rootSourcePath, string rootTargetPath, string fileName)
+        {
+            string sourceCode = File.ReadAllText(fileName);
+
+            UglifyResult result = new UglifyResult();
+            if (fileName.EndsWith(".js", StringComparison.InvariantCultureIgnoreCase))
+                result = Uglify.Js(sourceCode/*, codeSettings*/);
+            else if (fileName.EndsWith(".css", StringComparison.InvariantCultureIgnoreCase))
+                result = Uglify.Css(sourceCode);
+
+            if (result.HasErrors == false)
+            {
+                _WriteOnDisk(rootSourcePath, rootTargetPath, fileName, result.Code);
+            }
+            else
+            {
+                _consoleHelper.WriteError(result.Errors.ToString());
+            }
+        }
+
+        private void _WriteOnDisk(string rootSourcePath, string rootTargetPath, string fileName, string newCode)
+        {
+            string newFilePath = GetNewFilePath(fileName, rootSourcePath, rootTargetPath);
+
+            Directory.CreateDirectory(Path.GetDirectoryName(newFilePath));
+            File.WriteAllText(newFilePath, newCode);
+
+            _consoleHelper.WriteSuccess(fileName.Replace(rootSourcePath, ""));
+        }
+
         private string GetNewFilePath(string fileName, string rootSourcePath, string rootTargetPath)
         {
             string newFilePath = fileName.Replace(rootSourcePath, rootTargetPath);
-            
-            if (newFilePath.EndsWith(".js") && _config.JsInsertMinInfix)
-                newFilePath = newFilePath.Insert(newFilePath.Length -3, ".min");
-            
-            if (newFilePath.EndsWith(".css") && _config.CssInsertMinInfix)
-                newFilePath = newFilePath.Insert(newFilePath.Length -4, ".min");
+
+            if (newFilePath.EndsWith(".js", StringComparison.InvariantCultureIgnoreCase) && _config.JsInsertMinInfix)
+                newFilePath = newFilePath.Insert(newFilePath.Length - 3, ".min");
+
+            if (newFilePath.EndsWith(".css", StringComparison.InvariantCultureIgnoreCase) && _config.CssInsertMinInfix)
+                newFilePath = newFilePath.Insert(newFilePath.Length - 4, ".min");
 
             return newFilePath;
         }
