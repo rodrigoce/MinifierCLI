@@ -32,9 +32,6 @@ namespace WebApp.MinifyCLI
 
         private void _Minify(IReadOnlyCollection<string> listOfFiles, string rootSourcePath, string rootTargetPath)
         {
-            // CodeSettings codeSettings = new CodeSettings();
-            // codeSettings.PreserveFunctionNames = true;
-
             foreach (var fileName in listOfFiles)
             {
                 if (fileName.EndsWith(".js", StringComparison.InvariantCultureIgnoreCase))
@@ -64,6 +61,9 @@ namespace WebApp.MinifyCLI
 
         private void _MinifyByNuglify(string rootSourcePath, string rootTargetPath, string fileName)
         {
+            //CodeSettings codeSettings = new CodeSettings();
+            //codeSettings.AddNoAutoRename()
+
             string sourceCode = File.ReadAllText(fileName);
 
             UglifyResult result = new UglifyResult();

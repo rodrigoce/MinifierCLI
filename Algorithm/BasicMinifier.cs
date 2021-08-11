@@ -22,7 +22,9 @@ namespace MinifierCLI.Algorithm
 
                 if (!string.IsNullOrEmpty(minLine))
                 {
-                    if ((charCount < 200) && (squarify) && (_openedStringWith == string.Empty))
+                    if ((charCount < 200) && (squarify) &&
+                        (_openedStringWith == string.Empty) && (_sholdBreakLine == false) /*&& 
+                        false*/)
                     {
                         sb.Append(minLine + " ");
                         charCount += minLine.Length;
@@ -31,6 +33,7 @@ namespace MinifierCLI.Algorithm
                     {
                         sb.AppendLine(minLine);
                         charCount = 0;
+                        _sholdBreakLine = false;
                     }
                 }
                 line = sr.ReadLine();
@@ -84,6 +87,7 @@ namespace MinifierCLI.Algorithm
 
         }
 
+        private bool _sholdBreakLine = false;
         private void FindOpenComm(ref string line)
         {
             // buscar por abridores de comentário
@@ -125,34 +129,52 @@ namespace MinifierCLI.Algorithm
                 FindString(testOpenedStringBefore, false);
                 if (_openedStringWith != string.Empty)
                 {
-                    // agora busca o local onde essa string foi fechada
-                    // e tenta encontrar aberturas de comentários
-                    // após o fechamento da string
-                    string textClosedStringAfter = line.Substring(indexComm + typeComm.Length);
+                    // pega o texto após o comentário
+                    string textAfterComm = line.Substring(indexComm + typeComm.Length);
                     // cancela a abertura de comentário
                     indexComm = -1;
-                    int indexClosedString = FindString(textClosedStringAfter, true);
+                    // pega o indice de onde a string foi fechada
+                    int indexClosedString = FindString(textAfterComm, true);
 
                     if (indexClosedString > -1)
                     {
-                        string lineAfterString = line.Substring(indexClosedString + 1);
+                        string lineAfterString = textAfterComm.Substring(indexClosedString + 1);
+                        string lineWithString = line.Substring(0, line.Length + 1 - (textAfterComm.Length - indexClosedString));
                         FindOpenComm(ref lineAfterString);
-                        line = line.Substring(0, indexClosedString + 1) + lineAfterString;
+                        line = lineWithString + lineAfterString;
                     }
                 }
             }
 
+            // se um comentário foi aberto
             if (indexComm > -1)
             {
-                if (typeComm == _lineComm)
-                    line = line.Substring(0, indexComm);
+                // regex estão entre barras / expressão /
+                // ex: /abc//
+                // no exemplo acima não há comentário
+                // por simplicidade, quando um comentário for aberto
+                // e houver anterior a ele uma barra, será considerado 
+                // como expressão regex.
+                // a quebra de linha deve ser vetada
+
+                if (line.Substring(0, indexComm).IndexOf("/") > -1)
+                {
+                    _sholdBreakLine = true;
+                    indexComm = -1;
+                }
                 else
                 {
-                    _waitingCloseComment = true;
-                    string restRight = line.Substring(indexComm + typeComm.Length);
-                    line = line.Substring(0, indexComm);
-                    FindCloseLongComm(ref restRight);
-                    line = line + restRight;
+
+                    if (typeComm == _lineComm)
+                        line = line.Substring(0, indexComm);
+                    else
+                    {
+                        _waitingCloseComment = true;
+                        string restRight = line.Substring(indexComm + typeComm.Length);
+                        line = line.Substring(0, indexComm);
+                        FindCloseLongComm(ref restRight);
+                        line = line + restRight;
+                    }
                 }
             }
         }
