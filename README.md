@@ -8,12 +8,12 @@ It requires the minify.json file.
     "JsRootSource": "js/notmin",
     "JsRootTarget": "js/min",
     "JsInsertMinInfix" : true,
-    "JsUseBasicMinify" : true,
+    "JsUseBasicMinify" : false,
     
     "CssRootSource": "css/notmin",
     "CssRootTarget": "css/min",
     "CssInsertMinInfix" : true,
-    "CssUseBasicMinify" : true,
+    "CssUseBasicMinify" : false,
 
     "InsertTimeStampInAppSettings": true
 }
